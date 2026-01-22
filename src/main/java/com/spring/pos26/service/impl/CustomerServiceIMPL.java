@@ -1,6 +1,7 @@
 package com.spring.pos26.service.impl;
 
 import com.spring.pos26.dto.CustomerDTO;
+import com.spring.pos26.dto.request.CustomerUpdateDTO;
 import com.spring.pos26.entity.Customer;
 import com.spring.pos26.repo.CustomerRepo;
 import com.spring.pos26.service.CustomerService;
@@ -22,6 +23,21 @@ public class CustomerServiceIMPL implements CustomerService {
         );
         customerRepo.save(customer);
         return "Saved " + customer.getCustomerName();
+
+    }
+
+    @Override
+    public String updateCustomer(CustomerUpdateDTO customerUpdateDTO) {
+        if(customerRepo.existsById(customerUpdateDTO.getCustomerId())) {
+            Customer customer=customerRepo.getReferenceById(customerUpdateDTO.getCustomerId());
+            customer.setCustomerName(customerUpdateDTO.getCustomerName());
+            customer.setCustomerAddress(customerUpdateDTO.getCustomerAddress());
+            customerRepo.save(customer);
+
+        }else{
+            throw  new RuntimeException("Customer not found");
+        }
+        return "updated " + customerUpdateDTO.getCustomerName();
 
     }
 }
