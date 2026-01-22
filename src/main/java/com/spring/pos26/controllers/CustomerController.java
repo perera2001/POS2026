@@ -2,6 +2,7 @@ package com.spring.pos26.controllers;
 
 
 import com.spring.pos26.dto.CustomerDTO;
+import com.spring.pos26.dto.request.CustomerUpdateDTO;
 import com.spring.pos26.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,13 @@ private CustomerService customerService;
     return message;
 
 
+}
+
+@PutMapping(path = "/update")
+    public String updateCustomer(@RequestBody CustomerUpdateDTO customerUpdateDTO) {
+
+    customerService.updateCustomer(customerUpdateDTO);
+    return "success";
 }
 
 }
