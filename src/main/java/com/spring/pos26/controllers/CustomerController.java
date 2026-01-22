@@ -30,4 +30,9 @@ private CustomerService customerService;
     return "success";
 }
 
+@GetMapping(path = "get")
+    public String getCustomer() {
+    return "success";
+}
+
 }
