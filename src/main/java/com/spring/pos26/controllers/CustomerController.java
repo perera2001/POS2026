@@ -35,4 +35,15 @@ private CustomerService customerService;
     return "success";
 }
 
+@GetMapping(
+        path = "/get-by-id",
+        params = "id"
+)
+    public CustomerDTO getCustomerById( @RequestParam(value = "id") int customerId) {
+    CustomerDTO customerDTO = customerService.getCustomerId(customerId);
+    return customerDTO;
+
+
+     }
+
 }
