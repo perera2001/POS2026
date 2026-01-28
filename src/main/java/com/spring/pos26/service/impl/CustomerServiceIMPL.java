@@ -8,6 +8,9 @@ import com.spring.pos26.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CustomerServiceIMPL implements CustomerService {
     @Autowired
@@ -57,5 +60,23 @@ public class CustomerServiceIMPL implements CustomerService {
         }else {
             throw  new RuntimeException("Customer not found");
         }
+    }
+
+    @Override
+    public List<CustomerDTO> getAllCustomers() {
+        List<Customer> getAllCustomers = customerRepo.findAll();
+        List<CustomerDTO> customerDTOList=new ArrayList<>();
+
+        for (Customer customer : getAllCustomers) {
+            CustomerDTO customerDTO=new CustomerDTO(
+                    customer.getCustomerId(),
+                    customer.getCustomerName(),
+                    customer.getCustomerAddress(),
+                    customer.getContactNumber(),
+                    customer.isActive()
+            );
+            customerDTOList.add(customerDTO);
+        }
+        return customerDTOList;
     }
 }
