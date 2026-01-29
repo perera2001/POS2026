@@ -56,4 +56,13 @@ private CustomerService customerService;
         return  allCustomers;
      }
 
+     @DeleteMapping(
+             path = "delete-customer/{id}"
+     )
+    public String deleteCustomer(@PathVariable(value = "id") int customerId) {
+       String deleted=customerService.deleteCustomer(customerId);
+       return deleted;
+
+     }
+
 }
