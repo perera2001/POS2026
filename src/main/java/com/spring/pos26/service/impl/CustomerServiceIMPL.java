@@ -3,6 +3,7 @@ package com.spring.pos26.service.impl;
 import com.spring.pos26.dto.CustomerDTO;
 import com.spring.pos26.dto.request.CustomerUpdateDTO;
 import com.spring.pos26.entity.Customer;
+import com.spring.pos26.exception.NotFoundException;
 import com.spring.pos26.repo.CustomerRepo;
 import com.spring.pos26.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,26 +59,30 @@ public class CustomerServiceIMPL implements CustomerService {
             return customerDTO;
 
         }else {
-            throw  new RuntimeException("Customer not found");
+            throw  new NotFoundException("Customer not found");
         }
     }
 
     @Override
     public List<CustomerDTO> getAllCustomers() {
         List<Customer> getAllCustomers = customerRepo.findAll();
-        List<CustomerDTO> customerDTOList=new ArrayList<>();
+        if(getAllCustomers.size()>0) {
+            List<CustomerDTO> customerDTOList = new ArrayList<>();
 
-        for (Customer customer : getAllCustomers) {
-            CustomerDTO customerDTO=new CustomerDTO(
-                    customer.getCustomerId(),
-                    customer.getCustomerName(),
-                    customer.getCustomerAddress(),
-                    customer.getContactNumber(),
-                    customer.isActive()
-            );
-            customerDTOList.add(customerDTO);
+            for (Customer customer : getAllCustomers) {
+                CustomerDTO customerDTO = new CustomerDTO(
+                        customer.getCustomerId(),
+                        customer.getCustomerName(),
+                        customer.getCustomerAddress(),
+                        customer.getContactNumber(),
+                        customer.isActive()
+                );
+                customerDTOList.add(customerDTO);
+            }
+            return customerDTOList;
+        }else {
+            return null;
         }
-        return customerDTOList;
     }
 
     @Override
