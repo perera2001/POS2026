@@ -81,7 +81,7 @@ public class CustomerServiceIMPL implements CustomerService {
             }
             return customerDTOList;
         }else {
-            return null;
+           throw  new NotFoundException("Customer not found");
         }
     }
 
